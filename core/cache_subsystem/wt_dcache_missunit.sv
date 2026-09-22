@@ -78,10 +78,11 @@ module wt_dcache_missunit
 );
 
   // functions
-  function automatic logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] dcache_way_bin2oh(
-      input logic [CVA6Cfg.DCACHE_SET_ASSOC_WIDTH-1:0] in);
+    function automatic logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] dcache_way_bin2oh(
+    input logic [CVA6Cfg.DCACHE_SET_ASSOC_WIDTH-1:0] in);
     logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] out;
-    out     = '0;
+    out = '0;
+    if (in < CVA6Cfg.DCACHE_SET_ASSOC)
     out[in] = 1'b1;
     return out;
   endfunction
@@ -208,7 +209,9 @@ module wt_dcache_missunit
       .out_o (rnd_way)
   );
 
-  assign repl_way             = (all_ways_valid) ? rnd_way : inv_way;
+ assign repl_way = (all_ways_valid) ?
+                  ((rnd_way < CVA6Cfg.DCACHE_SET_ASSOC) ? rnd_way : '0) :
+                  inv_way;
 
   assign mshr_d.size          = (mshr_allocate) ? miss_size_i[miss_port_idx] : mshr_q.size;
   assign mshr_d.paddr         = (mshr_allocate) ? miss_paddr_i[miss_port_idx] : mshr_q.paddr;
@@ -642,10 +645,15 @@ module wt_dcache_missunit
 
   //pragma translate_off
 `ifndef VERILATOR
-
+  replacement_way_valid :
+  assert property (
+    @(posedge clk_i) disable iff (!rst_ni)
+      mshr_vld_q |-> mshr_q.repl_way < CVA6Cfg.DCACHE_SET_ASSOC
+  )
+  else $fatal(1, "[l1 dcache missunit] replacement way is out of range");
   read_tid :
   assert property (
-    @(posedge clk_i) disable iff (!rst_ni) mshr_vld_q |-> mem_rtrn_vld_i |-> load_ack |-> mem_rtrn_i.tid == mshr_q.id)
+    @(posedge clk_i) disagit diff --checkble iff (!rst_ni) mshr_vld_q |-> mem_rtrn_vld_i |-> load_ack |-> mem_rtrn_i.tid == mshr_q.id)
   else $fatal(1, "[l1 dcache missunit] TID of load response doesn't match");
 
   read_ports :
