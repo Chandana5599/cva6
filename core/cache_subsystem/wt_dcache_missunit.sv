@@ -653,7 +653,7 @@ module wt_dcache_missunit
   else $fatal(1, "[l1 dcache missunit] replacement way is out of range");
   read_tid :
   assert property (
-    @(posedge clk_i) disagit diff --checkble iff (!rst_ni) mshr_vld_q |-> mem_rtrn_vld_i |-> load_ack |-> mem_rtrn_i.tid == mshr_q.id)
+    @(posedge clk_i) disable iff (!rst_ni) mshr_vld_q |-> mem_rtrn_vld_i |-> load_ack |-> mem_rtrn_i.tid == mshr_q.id)
   else $fatal(1, "[l1 dcache missunit] TID of load response doesn't match");
 
   read_ports :
