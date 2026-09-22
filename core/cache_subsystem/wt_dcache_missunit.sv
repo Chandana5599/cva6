@@ -78,8 +78,8 @@ module wt_dcache_missunit
 );
 
   // functions
-    function automatic logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] dcache_way_bin2oh(
-    input logic [CVA6Cfg.DCACHE_SET_ASSOC_WIDTH-1:0] in);
+  function automatic logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] dcache_way_bin2oh(
+        input logic [CVA6Cfg.DCACHE_SET_ASSOC_WIDTH-1:0] in);
     logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] out;
     out = '0;
     if (in < CVA6Cfg.DCACHE_SET_ASSOC)
@@ -210,8 +210,8 @@ module wt_dcache_missunit
   );
 
  assign repl_way = (all_ways_valid) ?
-                  ((rnd_way < CVA6Cfg.DCACHE_SET_ASSOC) ? rnd_way : '0) :
-                  inv_way;
+                   ((rnd_way < CVA6Cfg.DCACHE_SET_ASSOC) ? rnd_way : '0) :
+                   inv_way;
 
   assign mshr_d.size          = (mshr_allocate) ? miss_size_i[miss_port_idx] : mshr_q.size;
   assign mshr_d.paddr         = (mshr_allocate) ? miss_paddr_i[miss_port_idx] : mshr_q.paddr;
