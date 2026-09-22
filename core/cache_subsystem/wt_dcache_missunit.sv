@@ -79,7 +79,7 @@ module wt_dcache_missunit
 
   // functions
   function automatic logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] dcache_way_bin2oh(
-        input logic [CVA6Cfg.DCACHE_SET_ASSOC_WIDTH-1:0] in);
+      input logic [CVA6Cfg.DCACHE_SET_ASSOC_WIDTH-1:0] in);
     logic [CVA6Cfg.DCACHE_SET_ASSOC-1:0] out;
     out = '0;
     if (in < CVA6Cfg.DCACHE_SET_ASSOC)
@@ -209,7 +209,7 @@ module wt_dcache_missunit
       .out_o (rnd_way)
   );
 
- assign repl_way = (all_ways_valid) ?
+  assign repl_way = (all_ways_valid) ?
                    ((rnd_way < CVA6Cfg.DCACHE_SET_ASSOC) ? rnd_way : '0) :
                    inv_way;
 
