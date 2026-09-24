@@ -474,6 +474,7 @@ module decoder
             3'b010: begin
               if (CVA6Cfg.RVZiCbom) begin
                 instruction_o.fu = STORE;
+                instruction_o.is_cbo_mgmt = 1'b1;
                 instruction_o.rs1[4:0] = instr.itype.rs1;
                 // not used - zero
                 instruction_o.rs2[4:0] = '0;
