@@ -122,6 +122,7 @@ module cva6
       logic is_double_rd_macro_instr;  // is double move decoded 32bit instruction of macro definition
       logic vfp;  // is this a vector floating-point instruction?
       logic is_zcmt;  //is a zcmt instruction
+      logic is_cbo_mgmt;  // is a CBO management instruction
     },
     localparam type writeback_t = struct packed {
       logic valid;  // wb data is valid
