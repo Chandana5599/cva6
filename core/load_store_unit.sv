@@ -49,6 +49,8 @@ module load_store_unit
     input logic [31:0] tinst_i,
     // FU data needed to execute instruction - ISSUE_STAGE
     input fu_data_t fu_data_i,
+    // CBO management instruction - ISSUE_STAGE
+    input logic is_cbo_mgmt,
     // Load Store Unit is ready - ISSUE_STAGE
     output logic lsu_ready_o,
     // Load Store Unit instruction is valid - ISSUE_STAGE
