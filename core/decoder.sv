@@ -197,6 +197,7 @@ module decoder
     instruction_o.bp                       = branch_predict_i;
     instruction_o.vfp                      = 1'b0;
     instruction_o.is_zcmt                  = is_zcmt_i;
+    instruction_o.is_cbo_mgmt              = 1'b0;
     ecall                                  = 1'b0;
     ebreak                                 = 1'b0;
     check_fprm                             = 1'b0;
